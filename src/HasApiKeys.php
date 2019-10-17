@@ -7,5 +7,4 @@ trait HasApiKeys
     public function apiKeys(){
         return $this->hasMany(ApiKey::class);
     }
-
 }

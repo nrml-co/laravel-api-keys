@@ -2,6 +2,7 @@
 
 namespace NrmlCo\LaravelApiKeys;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -12,6 +13,7 @@ class LaravelApiKeysServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         /*
          * Optional methods to load your package assets
          */
@@ -56,6 +58,18 @@ class LaravelApiKeysServiceProvider extends ServiceProvider
         // Register the main class to use with the facade
         $this->app->singleton('laravel-api-keys', function () {
             return new LaravelApiKeys();
+        });
+
+        $this->app->resolving('auth', function ($auth) {
+            $auth->extend('lak', function($app, $name, array $config){
+                return $app->make(LaravelApiKeysGuard::class,[
+                    'name' => $name,
+                    'config' => $config,
+                    'provider' => $app['auth']->createUserProvider($config['provider'] ?? null)
+                ]);
+            });
+
+
         });
     }
 }
