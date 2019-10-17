@@ -1,6 +1,6 @@
 {
     "name": "nrml-co/laravel-api-keys",
-    "description": "Easy API keys - Because laravel/passport is crazy.",
+    "description": "Easy API keys - Because laravel/passport is hard.",
     "keywords": [
         "nrml-co",
         "laravel-api-keys"

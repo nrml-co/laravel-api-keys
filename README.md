@@ -87,14 +87,14 @@ Change the guards section of config/auth.php
 ```
 
 
-User the 'auth:lak' middleware in your api.php routes.
+Use the 'auth:lak' middleware in api.php routes.
 ``` php
 Route::middleware('auth:lak')->get('/user', function (Request $request) {
     return $request->user();
 });
 ```
 
-Replace the x-api-key header with your own key and test it.
+Replace the x-api-key header with your own api-key and test..
 ``` bash
 
 $ curl -X GET \
