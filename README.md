@@ -63,13 +63,13 @@ The user needs to be logged in.  Programmatically it looks like this.
 Auth::setUser($user);
 ```
 
-And not the package will create ApiKeys for the Authorized user.   
+Now the package will create ApiKeys for the authorized user.   
 ``` php
 LaravelApiKeys::create(LaravelApiKeyType::PRODUCTION); // default is SANDBOX
 ```
 
 ## Using the your API Keys
-Change config/auth.php
+Change the guards section of config/auth.php
 ``` php
     'guards' => [
         'web' => [
@@ -94,7 +94,7 @@ Route::middleware('auth:lak')->get('/user', function (Request $request) {
 });
 ```
 
-Check your work from the command line.
+Replace the x-api-key header with your own key and test it.
 ``` bash
 
 $ curl -X GET \
@@ -103,7 +103,16 @@ $ curl -X GET \
   -H 'x-api-key: al4PA8V5jSuq4oFJOxK6lS4CeZEkDFtayBObJTHJ'
 
 ```
-
+The above curl command will return the user authorized by the ApiKey.
+```json
+{
+    "id": 1,
+    "name": "Ed Anisko",
+    "email": "ed@nrml.co",    
+    "created_at": "2019-10-17 07:18:59",
+    "updated_at": "2019-10-17 07:18:59"
+}
+```
 ### Testing
 
 ``` bash
