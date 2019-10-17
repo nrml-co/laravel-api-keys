@@ -2,10 +2,10 @@
 
 namespace NrmlCo\LaravelApiKeys;
 
-use App\User;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LaravelApiKeysGuard implements Guard
 {
@@ -14,12 +14,19 @@ class LaravelApiKeysGuard implements Guard
     public function __construct()
     {
         $xApiKey = request()->header('x-api-key');
-        $apiKey = ApiKey::where('key', $xApiKey)->first();
+
+        $apiKey = Cache::get($xApiKey, function() use ($xApiKey){
+            $apiKey = ApiKey::where('key', $xApiKey)->first();
+            Cache::put($xApiKey, $apiKey, now()->addMinutes(2));
+            return $apiKey;
+        }) ;
 
         if($apiKey)
         {
             $this->api_user = $apiKey->user;
         }
+
+
     }
 
     protected $rules = [
