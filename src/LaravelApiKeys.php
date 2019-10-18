@@ -8,17 +8,21 @@ use NrmlCo\LaravelApiKeys\ApiKeyType;
 
 class LaravelApiKeys
 {
-    public static function create( $apiKeyType = null)
+    public static function create( $apiKeyType = null, $data = [])
     {
         if ($apiKeyType === null)
         {
             $apiKeyType = ApiKeyType::SANDBOX;
         }
 
+        $name = isset($data['name']) ? $data['name'] : 'Unnamed Key';
+        dump($name);
+
         return ApiKey::firstOrCreate([
             'user_id' => Auth::id(),
             'type' => $apiKeyType,
-            'api_key' => Str::random(40)
+            'api_key' => Str::random(80),
+            'name' => $name,
         ]);
     }
 
