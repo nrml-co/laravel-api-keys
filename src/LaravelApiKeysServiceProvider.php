@@ -12,15 +12,7 @@ class LaravelApiKeysServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-api-keys.php'),
-            ], 'config');
-
-        }
     }
 
     /**
@@ -28,24 +20,18 @@ class LaravelApiKeysServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-api-keys');
-
         // Register the main class to use with the facade
         $this->app->singleton('laravel-api-keys', function () {
             return new LaravelApiKeys();
         });
 
-        $this->app->resolving('auth', function ($auth) {
-            $auth->extend('lak', function($app, $name, array $config){
-                return $app->make(LaravelApiKeysGuard::class,[
-                    'name' => $name,
-                    'config' => $config,
-                    'provider' => $app['auth']->createUserProvider($config['provider'] ?? null)
-                ]);
-            });
+        auth()->extend('api_key', function ($app, $name, array $config) {
 
-
+            // automatically build the DI, put it as reference
+            $userProvider = app(ApiKeyToUserProvider::class);
+            $request = app('request');
+            return new ApiKeyGuard($userProvider, $request, $config);
         });
+
     }
 }

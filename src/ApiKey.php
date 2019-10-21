@@ -10,7 +10,7 @@ class ApiKey extends Model
     protected $with = ['user'];
 
     protected $fillable = [
-        'user_id', 'type', 'key'
+        'user_id', 'type', 'api_key'
         ];
 
     public function user()

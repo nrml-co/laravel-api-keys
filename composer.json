@@ -3,6 +3,11 @@
     "description": "Easy API keys - Because laravel/passport is hard.",
     "keywords": [
         "nrml-co",
+        "normal",
+        "laravel",
+        "api",
+        "keys",
+        "api-keys",
         "laravel-api-keys"
     ],
     "homepage": "https://github.com/nrml-co/laravel-api-keys",

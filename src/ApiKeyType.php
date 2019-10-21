@@ -4,7 +4,7 @@
 namespace NrmlCo\LaravelApiKeys;
 
 
-class LaravelApiKeyType
+class ApiKeyType
 {
     public const SANDBOX='SANDBOX';
     public const PRODUCTION='PRODUCTION';
