@@ -47,7 +47,7 @@ class User extends Authenticatable
 
 ```
 
-Next create a User.  
+Next create a User. Easiest to to this part in tinker.  
 ``` php
 $user = User::create([
         'name' => 'Ed Anisko',
@@ -65,11 +65,13 @@ Auth::setUser($user);
 
 Now the package will create ApiKeys for the authorized user.   
 ``` php
-LaravelApiKeys::create(LaravelApiKeyType::PRODUCTION); // default is SANDBOX
+LaravelApiKeys::create(); // default is SANDBOX
 ```
+Copy the new api key.
+
 
 ## Using the your API Keys
-Change the guards section of config/auth.php
+Add the new entry to the guards section of config/auth.php
 ``` php
     'guards' => [
         'web' => [
@@ -78,23 +80,28 @@ Change the guards section of config/auth.php
         ],
 
         'api' => [
-            'driver' => 'lak',
+            'driver' => 'token',
             'provider' => 'users',
-            'hash' => true,
+            'hash' => false,
         ],
+
+        "api_key" => [
+            'driver' => 'api_key'
+        ]
 
     ]
 ```
 
 
-Use the 'auth:lak' middleware in api.php routes.
+Use the 'auth:api_key' middleware in api.php routes.
 ``` php
-Route::middleware('auth:lak')->get('/user', function (Request $request) {
+Route::middleware('auth:api_key')->get('/user', function (Request $request) {
     return $request->user();
 });
 ```
 
-Replace the x-api-key header with your own api-key and test..
+Replace the x-api-key header with your own api-key and test.
+Use the header Accept: application/json.
 ``` bash
 
 $ curl -X GET \
