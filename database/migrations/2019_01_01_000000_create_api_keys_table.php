@@ -18,7 +18,7 @@ class CreateApiKeysTable extends Migration
             $table->bigInteger('user_id')->index();
             $table->string('name', 50);
             $table->string('type', 10);
-            $table->string('api_key', 80)->unique()->nullable()->default(null);
+            $table->string('api_key', 60)->unique()->nullable()->default(null);
             $table->timestamps();
         });
     }

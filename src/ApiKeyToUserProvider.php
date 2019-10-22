@@ -17,6 +17,9 @@ class ApiKeyToUserProvider implements UserProvider
     }
     public function retrieveByToken ($identifier, $apiKey) {
         $apiKey = $this->apiKey->with('user')->where($identifier, $apiKey)->first();
+        if($apiKey){
+            $apiKey->touch();
+        }
         return $apiKey && $apiKey->user ? $apiKey->user : null;
     }
     public function updateRememberToken (Authenticatable $user, $token) {

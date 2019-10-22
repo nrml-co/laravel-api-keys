@@ -16,12 +16,11 @@ class LaravelApiKeys
         }
 
         $name = isset($data['name']) ? $data['name'] : 'Unnamed Key';
-        dump($name);
 
         return ApiKey::firstOrCreate([
             'user_id' => Auth::id(),
             'type' => $apiKeyType,
-            'api_key' => Str::random(80),
+            'api_key' => Str::random(60),
             'name' => $name,
         ]);
     }
