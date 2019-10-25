@@ -4,7 +4,8 @@ namespace NrmlCo\LaravelApiKeys;
 
 trait HasApiKeys
 {
-    public function apiKeys(){
+    public function apiKeys()
+    {
         return $this->hasMany(ApiKey::class);
     }
 }

@@ -4,7 +4,6 @@ namespace NrmlCo\LaravelApiKeys;
 
 use Illuminate\Support\ServiceProvider;
 
-
 class LaravelApiKeysServiceProvider extends ServiceProvider
 {
     /**
@@ -30,8 +29,8 @@ class LaravelApiKeysServiceProvider extends ServiceProvider
             // automatically build the DI, put it as reference
             $userProvider = app(ApiKeyToUserProvider::class);
             $request = app('request');
+
             return new ApiKeyGuard($userProvider, $request, $config);
         });
-
     }
 }
