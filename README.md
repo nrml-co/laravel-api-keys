@@ -135,6 +135,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
+.
 
 If you discover any security related issues, please email ed@normalllc.com instead of using the issue tracker.
 
