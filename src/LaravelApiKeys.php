@@ -1,17 +1,15 @@
 <?php
 
 namespace NrmlCo\LaravelApiKeys;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use NrmlCo\LaravelApiKeys\ApiKeyType;
-
 
 class LaravelApiKeys
 {
-    public static function create( $apiKeyType = null, $data = [])
+    public static function create($apiKeyType = null, $data = [])
     {
-        if ($apiKeyType === null)
-        {
+        if ($apiKeyType === null) {
             $apiKeyType = ApiKeyType::SANDBOX;
         }
 
@@ -32,6 +30,7 @@ class LaravelApiKeys
             // automatically build the DI, put it as reference
             $userProvider = app(ApiKeyToUserProvider::class);
             $request = app('request');
+
             return new ApiKeyGuard($userProvider, $request, $config);
         });
     }

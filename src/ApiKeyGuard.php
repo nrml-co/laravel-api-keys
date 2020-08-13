@@ -31,18 +31,18 @@ class ApiKeyGuard implements Guard
      */
     public function user()
     {
-        if (!is_null($this->user)) {
+        if (! is_null($this->user)) {
             return $this->user;
         }
         $user = null;
         $apiKey = $this->getApiKeyForRequest();
-        if (!empty($apiKey)) {
+        if (! empty($apiKey)) {
             // the token was found, how you want to pass?
             $user = $this->provider->retrieveByToken($this->storageKey, $apiKey);
         }
+
         return $this->user = $user;
     }
-
 
     /**
      * Get the apikey for the current request.
@@ -60,6 +60,7 @@ class ApiKeyGuard implements Guard
         if (empty($apiKey)) {
             $apiKey = $this->request->bearerToken();
         }
+
         return $apiKey;
     }
 
@@ -79,7 +80,5 @@ class ApiKeyGuard implements Guard
         if ($this->provider->retrieveByCredentials($credentials)) {
             return true;
         }
-
-
     }
 }
